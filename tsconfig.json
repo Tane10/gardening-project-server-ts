@@ -28,11 +28,12 @@
       "es2017.object",
       "es2017",
       "DOM"
-    ]
+    ],
+    "types": "reflect-metadata"
   },
   "exclude": [],
   "include": [
     "./app/**/*",
     "./spec/**/*"
-  ]
+  ],
 }

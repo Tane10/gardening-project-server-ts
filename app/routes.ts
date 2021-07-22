@@ -8,7 +8,7 @@ export class RoutesService {
   }
 
   public getRoutes(): router.Router {
-    this.routerInstance.get('/hello', (req, res, next) => {
+    this.routerInstance.post('/login', (req, res, next) => {
       res.send('hello there');
     });
     return this.routerInstance;
