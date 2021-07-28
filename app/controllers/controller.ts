@@ -1,4 +1,4 @@
-import router, {Router} from 'restify-router';
+import router from 'restify-router';
 
 export interface Controller{
     getRouter(): router.Router;

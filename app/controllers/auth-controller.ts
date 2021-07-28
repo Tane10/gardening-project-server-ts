@@ -1,4 +1,4 @@
-import {Request, Response} from 'restify';
+import {Request, Response, Next} from 'restify';
 import router, {Router} from 'restify-router';
 
 import {Controller} from './controller';
@@ -16,8 +16,8 @@ export class AuthController implements Controller {
 
   }
 
-  public login(req: Request, res: Response, next: Function): void {
-
+  public login(req: Request, res: Response, next: Next): void {
+    console.log('we are loggin');
   }
 
 
@@ -31,3 +31,5 @@ export class AuthController implements Controller {
 
 
 }
+
+
