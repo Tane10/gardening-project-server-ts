@@ -1,7 +1,7 @@
 import restify from 'restify';
-import corsMiddleware, {CorsMiddleware} from 'restify-cors-middleware';
+import corsMiddleware, {CorsMiddleware} from 'restify-cors-middleware2';
 
-import {RoutesService} from './routes';
+import {Controller} from './controllers/controller';
 
 const cors: CorsMiddleware = corsMiddleware({
   origins: ['*'],
@@ -12,20 +12,21 @@ const cors: CorsMiddleware = corsMiddleware({
 export class Server {
   private app: restify.Server;
 
-  constructor(private routesService: RoutesService) {
+  constructor(controllers: Controller[]) {
     this.app = restify.createServer();
     this.app.pre(cors.preflight);
     this.app.use(cors.actual);
-    this.routesService = new RoutesService();
+    this.app.use(restify.plugins.bodyParser());
+    this.app.use(restify.plugins.authorizationParser());
 
+    controllers.forEach((controller) => {
+      controller.getRouter().applyRoutes(this.app);
+    });
   }
 
   public getApp(): restify.Server {
-    const routes = this.routesService.getRoutes();
-    routes.applyRoutes(this.app);
     return this.app;
   }
-
 
 }
 

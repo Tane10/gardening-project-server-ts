@@ -1,17 +1,22 @@
 /* eslint-disable no-process-env */
 import {AddressInfo} from 'net';
 
+
+import 'reflect-metadata';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 
 import {Server} from './server';
-import {RoutesService} from './routes';
 import logger from './logger';
+import {container} from './container';
+import {AuthController} from './controllers/auth-controller';
 
 dotenv.config();
 
-const routeService = new RoutesService();
-const server = new Server(routeService);
+
+const server = new Server(
+  [container.get<AuthController>(AuthController)],
+);
 
 
 async function start(): Promise<void> {
