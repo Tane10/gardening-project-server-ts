@@ -1,12 +1,3 @@
-import {Schema} from 'mongoose';
-
-// const User: Schema = new Schema({
-//   name: {type: String},
-//   email: {type: String},
-//   password: {type: String},
-//   role: {type: Number},
-// });
-
 export enum UserType {
     User = 'user',
     Admin = 'admin',
@@ -19,7 +10,7 @@ export enum LoginType {
     Google = 'google',
 }
 
-export class User {
+export default class User {
   fullname?: string;
   username: string;
   password: string;
@@ -30,3 +21,5 @@ export class User {
   lastLoginIn?: Date;
   loginType?: LoginType;
 }
+
+

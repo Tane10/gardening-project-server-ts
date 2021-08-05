@@ -5,6 +5,7 @@ import {AddressInfo} from 'net';
 import 'reflect-metadata';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
+import {Logger} from 'winston';
 
 import {Server} from './server';
 import logger from './logger';
@@ -13,6 +14,8 @@ import {AuthController} from './controllers/auth-controller';
 
 dotenv.config();
 
+
+container.bind<Logger>('Logger').toConstantValue(logger);
 
 const server = new Server(
   [container.get<AuthController>(AuthController)],

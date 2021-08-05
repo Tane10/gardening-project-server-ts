@@ -1,3 +1,4 @@
+/* eslint-disable no-process-env */
 
 import 'reflect-metadata';
 import {Request, Response, Next} from 'restify';
@@ -5,7 +6,7 @@ import router, {Router} from 'restify-router';
 import {injectable} from 'inversify';
 
 import {AuthService} from '../services/auth-service';
-import {User} from '../model/user';
+import User from '../model/user';
 
 import {Controller} from './controller';
 
@@ -33,16 +34,12 @@ export class AuthController implements Controller {
   }
 
   public login(req: Request, res: Response, next: Next): void {
-    console.log('we are loggin');
     res.send('login');
   }
 
   public async signUp(req: Request, res: Response, next: Next): Promise<void> {
     const user: User = req.body;
-    user.password = await this.authService.hashPassword(user.password);
-
-    // await this.authService.hashPassword(user.password);
-    res.send(user);
+    await this.authService.signUpUser(user);
   }
 
   public getRouter(): router.Router {
