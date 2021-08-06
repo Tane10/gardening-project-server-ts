@@ -33,13 +33,34 @@ export class AuthController implements Controller {
     });
   }
 
-  public login(req: Request, res: Response, next: Next): void {
+  public async login(req: Request, res: Response, next: Next): Promise<void> {
+    try {
+      if (req.body.username && req.body.password) {
+
+        this.authService.login(req.body.username, req.body.password)
+          .then((token) => res.send(token))
+          .catch((err) => {
+            throw err;
+          });
+
+      }
+      if (req.headers.authorization) {
+        console.log('token');
+      }
+    } catch (err) {
+      next(err);
+    }
     res.send('login');
   }
 
   public async signUp(req: Request, res: Response, next: Next): Promise<void> {
-    const user: User = req.body;
-    await this.authService.signUpUser(user);
+    try {
+      const user: User = req.body;
+      await this.authService.signUpUser(user);
+    } catch (err) {
+      next(err);
+    }
+
   }
 
   public getRouter(): router.Router {
@@ -49,7 +70,6 @@ export class AuthController implements Controller {
   public getMountPath(): string {
     return '/auth';
   }
-
 
 }
 

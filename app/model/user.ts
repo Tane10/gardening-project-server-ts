@@ -21,5 +21,3 @@ export default class User {
   lastLoginIn?: Date;
   loginType?: LoginType;
 }
-
-

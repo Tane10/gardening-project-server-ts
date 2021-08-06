@@ -1,6 +1,7 @@
 POST http://localhost:8000/api/v1/login
 accept: application/json, text/plain, */*'
 # authorization: Basic MjA6NjNlNThiZjEzZjY3ZWY0YzQ5ZWQyY2Y1YzdiZjQyNWY=
+{ "username": "king", "password": "123456"}
 ###
 GET http://localhost:8000/ping
 accept: application/json, text/plain, */*'
@@ -9,5 +10,5 @@ POST http://localhost:8000/api/v1/signup
 accept: application/json
 content-type: application/json;charset=UTF-8
 
-{ "username": "jeff1000", "password": "123456", "email": "test@gmail.com", "type": "user"}
+{ "username": "king", "password": "123456", "email": "test@gmail.com", "type": "user"}
 ###

@@ -1,10 +1,11 @@
-import mongoose, {Schema} from 'mongoose';
+import mongoose, {Schema, Types} from 'mongoose';
 
 import {UserType, LoginType} from '../model/user';
 
 
-interface UserInterface extends Document {
- fullname?: string;
+export interface UserInterface extends Document {
+  _id?: Types.ObjectId;
+  fullname?: string;
   username: string;
   password: string;
   email: string;
@@ -13,8 +14,9 @@ interface UserInterface extends Document {
   disabled?: string;
   lastLoginIn?: Date;
   loginType?: LoginType;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
-
 
 const UserSchema: Schema = new Schema({
   fullname: {type: String},
