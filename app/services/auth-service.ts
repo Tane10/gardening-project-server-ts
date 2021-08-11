@@ -72,6 +72,7 @@ export class AuthService {
           loginType,
         });
 
+
         newUser.save().then((res) => {
           this.logger.info(res);
         })

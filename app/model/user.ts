@@ -1,8 +1,8 @@
-export enum UserType {
-    User = 'user',
-    Admin = 'admin',
-    Demo = 'demo',
-}
+// export enum UserType {
+//     User = 'user',
+//     Admin = 'admin',
+//     Demo = 'demo',
+// }
 
 
 export enum LoginType {
@@ -15,7 +15,7 @@ export default class User {
   username: string;
   password: string;
   email: string;
-  type: UserType;
+  type: string;
   avatar?: string;
   disabled?: string;
   lastLoginIn?: Date;

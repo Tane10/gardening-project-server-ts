@@ -1,6 +1,6 @@
 import mongoose, {Schema, Types} from 'mongoose';
 
-import {UserType, LoginType} from '../model/user';
+import {LoginType} from '../model/user';
 
 
 export interface UserInterface extends Document {
@@ -9,7 +9,7 @@ export interface UserInterface extends Document {
   username: string;
   password: string;
   email: string;
-  type: UserType;
+  type: string;
   avatar?: string;
   disabled?: string;
   lastLoginIn?: Date;
@@ -23,7 +23,7 @@ const UserSchema: Schema = new Schema({
   username: {type: String},
   password: {type: String},
   email: {type: String},
-  type: {type: UserType},
+  type: {type: String},
   avatar: {type: String},
   disabled: {type: Boolean},
   loginType: {type: LoginType},

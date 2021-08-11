@@ -5,8 +5,8 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-    - "80:8080"
+    - "80:8000"
     volumes:
-    - /Users/joshthom/Documents/GitHub/Grow-tent-project:/usr/src/app
+    - /Users/home/josh/gardening_project/server:/usr/src/app
 volumes:
   code: {}
