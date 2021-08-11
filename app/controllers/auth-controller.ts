@@ -36,9 +36,8 @@ export class AuthController implements Controller {
   public async login(req: Request, res: Response, next: Next): Promise<void> {
     try {
       if (req.body.username && req.body.password) {
-
         this.authService.login(req.body.username, req.body.password)
-          .then((token) => res.send(token))
+          .then((token) => res.send('token'))
           .catch((err) => {
             throw err;
           });
@@ -50,7 +49,6 @@ export class AuthController implements Controller {
     } catch (err) {
       next(err);
     }
-    res.send('login');
   }
 
   public async signUp(req: Request, res: Response, next: Next): Promise<void> {

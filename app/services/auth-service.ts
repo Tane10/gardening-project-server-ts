@@ -2,12 +2,15 @@
 /* eslint-disable no-process-env */
 import bcrypt from 'bcrypt';
 import {inject, injectable} from 'inversify';
-import jwt, { } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import {Logger} from 'winston';
-import {ConflictError, UnauthorizedError} from 'restify-errors';
+import {BadRequestError, ConflictError, UnauthorizedError} from 'restify-errors';
+import * as dotenv from 'dotenv';
 
 import User from '../model/user';
 import UserSchema, {UserInterface} from '../schema/user-schema';
+
+dotenv.config();
 
 
 @injectable()
@@ -21,16 +24,21 @@ export class AuthService {
   }
 
   private async getUser(username: string): Promise<UserInterface[]> {
-    return UserSchema.find({username});
+    try {
+      return UserSchema.find({username});
+    } catch (err) {
+      throw new BadRequestError({statusCode: 400}, 'Bad Request');
+    }
   }
 
   private async compare(password: string, dbHash: string): Promise<boolean> {
     return bcrypt.compare(password, dbHash);
   }
 
-  public checkIfVaild(token: string): void {
-    jwt.verify(token, process.env.JWT_KEY);
-  }
+  // private async encodeToken(username: string, password: string, maxAge?: string): Promise<void> {
+  //   return jwt.sign({username: `${username}`, password: `${password}`},
+  //     process.env.JWT_KEY, {expiresIn: maxAge ? maxAge : '24h'});
+  // }
 
 
   public async signUpUser(user: User): Promise<void> {
@@ -83,16 +91,14 @@ export class AuthService {
 
   }
 
-  public async login(username: string, password: string): Promise<any> {
+  public async login(username: string, password: string): Promise<void> {
     try {
       const user = await this.getUser(username);
       const dbPassword = user[0].password;
-
       this.compare(password, dbPassword).then((match) => {
-        if (!match) {
-          throw new UnauthorizedError({statusCode: 401}, 'Invaild details');
+        if (match === false) {
+          throw new UnauthorizedError({statusCode: 401}, 'Invalid details');
         }
-
       }).catch((err) => {
         throw err;
       });

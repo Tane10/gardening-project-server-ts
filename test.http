@@ -1,6 +1,8 @@
 POST http://localhost:8000/api/v1/login
-accept: application/json, text/plain, */*'
+accept: application/json
+content-type: application/json;charset=UTF-8
 # authorization: Basic MjA6NjNlNThiZjEzZjY3ZWY0YzQ5ZWQyY2Y1YzdiZjQyNWY=
+
 { "username": "king", "password": "123456"}
 ###
 GET http://localhost:8000/ping
