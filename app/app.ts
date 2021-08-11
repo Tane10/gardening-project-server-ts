@@ -11,6 +11,7 @@ import {Server} from './server';
 import logger from './logger';
 import {container} from './container';
 import {AuthController} from './controllers/auth-controller';
+import Common from './common';
 
 dotenv.config();
 
@@ -43,5 +44,8 @@ async function start(): Promise<void> {
     throw err;
   });
 }
+
+// dirty way to make exports available to the frontend
+export {Common};
 
 start();

@@ -1,7 +1,7 @@
 import {AuthService} from './services/auth-service';
 import logger from './logger';
 
-export class Api {
+export default class Api {
   public auth: AuthService;
 
   constructor() {
