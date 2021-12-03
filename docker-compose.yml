@@ -1,12 +1,12 @@
 version: '3'
 services:
-  grow_tent_project_api:
+  gardening_project_server:
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
-    - "80:8000"
+      - '80:8000'
     volumes:
-    - /Users/home/josh/gardening_project/server:/usr/src/app
+      - /Users/josh/Documents/GitHub/gardening-project-server-ts:/usr/src/app
 volumes:
   code: {}

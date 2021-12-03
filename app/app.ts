@@ -19,27 +19,27 @@ container.bind<Logger>('Logger').toConstantValue(logger);
 const server = new Server([container.get<AuthController>(AuthController)]);
 
 const start = async (): Promise<void> => {
-  await mongoose
-    .connect(process.env.MONGO_DB_CONNECTION_STRING)
-    .then(() => {
-      const app = server.getApp();
+  // await mongoose
+  //   .connect(process.env.MONGO_DB_CONNECTION_STRING)
+  //   .then(() => {
+  const app = server.getApp();
 
-      app.server.listen(8000, 'localhost', () => {
-        const address = app.server.address();
-        const port = typeof address === 'string' ? address : address?.port;
-        logger.info(
-          `Running on ${(address as AddressInfo).address} on port ${port}`
-        );
-      });
-      app.on('error', (err) => {
-        logger.error(`app has errored: ${err}`);
-        process.exit(1);
-      });
-    })
-    .catch((err) => {
-      logger.error(`DB auth failed: ${err}`);
-      throw err;
-    });
+  app.server.listen(8000, 'localhost', () => {
+    const address = app.server.address();
+    const port = typeof address === 'string' ? address : address?.port;
+    logger.info(
+      `Running on ${(address as AddressInfo).address} on port ${port}`
+    );
+  });
+  app.on('error', (err) => {
+    logger.error(`app has errored: ${err}`);
+    process.exit(1);
+  });
+  // })
+  // .catch((err) => {
+  //   logger.error(`DB auth failed: ${err}`);
+  //   throw err;
+  // });
 };
 
 // dirty way to make exports available to the frontend

@@ -11,7 +11,7 @@ import {
 } from 'restify-errors';
 import * as dotenv from 'dotenv';
 
-import User from '../model/user';
+import { User } from '../model/user';
 import UserSchema, { UserInterface } from '../schema/user-schema';
 
 dotenv.config();

@@ -17,21 +17,15 @@ export class AuthController implements Controller {
   constructor(private authService: AuthService) {
     this.router = new Router();
 
-    this.router.post(
-      `${process.env.BASE_URL}/login`,
-      (req: Request, res: Response, next: Next) => {
-        return this.login(req, res, next);
-      }
-    );
+    this.router.post(`/login`, (req: Request, res: Response, next: Next) => {
+      return this.login(req, res, next);
+    });
 
-    this.router.post(
-      `${process.env.BASE_URL}/signup`,
-      (req: Request, res: Response, next: Next) => {
-        return this.signUp(req, res, next);
-      }
-    );
+    this.router.post(`/signup`, (req: Request, res: Response, next: Next) => {
+      return this.signUp(req, res, next);
+    });
 
-    this.router.get(`/ping`, (req: Request, res: Response, next: Next) => {
+    this.router.get(`/ping`, (req: Request, res: Response) => {
       res.send('pong');
     });
   }
@@ -45,7 +39,7 @@ export class AuthController implements Controller {
       if (req.body.username && req.body.password) {
         this.authService
           .login(req.body.username, req.body.password)
-          .then((token) => res.send('token'))
+          .then((token) => res.send(token))
           .catch((err) => {
             throw err;
           });
