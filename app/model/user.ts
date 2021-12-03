@@ -4,10 +4,9 @@
 //     Demo = 'demo',
 // }
 
-
 export enum LoginType {
-    Standard = 'standard',
-    Google = 'google',
+  Standard = 'standard',
+  Google = 'google'
 }
 
 export default class User {

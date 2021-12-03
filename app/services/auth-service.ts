@@ -1,17 +1,20 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable no-process-env */
 import bcrypt from 'bcrypt';
-import {inject, injectable} from 'inversify';
+import { inject, injectable } from 'inversify';
 import jwt from 'jsonwebtoken';
-import {Logger} from 'winston';
-import {BadRequestError, ConflictError, UnauthorizedError} from 'restify-errors';
+import { Logger } from 'winston';
+import {
+  BadRequestError,
+  ConflictError,
+  UnauthorizedError
+} from 'restify-errors';
 import * as dotenv from 'dotenv';
 
 import User from '../model/user';
-import UserSchema, {UserInterface} from '../schema/user-schema';
+import UserSchema, { UserInterface } from '../schema/user-schema';
 
 dotenv.config();
-
 
 @injectable()
 export class AuthService {
@@ -25,9 +28,9 @@ export class AuthService {
 
   private async getUser(username: string): Promise<UserInterface[]> {
     try {
-      return UserSchema.find({username});
+      return UserSchema.find({ username });
     } catch (err) {
-      throw new BadRequestError({statusCode: 400}, 'Bad Request');
+      throw new BadRequestError({ statusCode: 400 }, 'Bad Request');
     }
   }
 
@@ -40,20 +43,20 @@ export class AuthService {
   //     process.env.JWT_KEY, {expiresIn: maxAge ? maxAge : '24h'});
   // }
 
-
   public async signUpUser(user: User): Promise<void> {
     try {
       const {
-      fullname,
-      username,
-      email,
-      type,
-      avatar,
-      disabled,
-      lastLoginIn,
-      loginType} = user;
+        fullname,
+        username,
+        email,
+        type,
+        avatar,
+        disabled,
+        lastLoginIn,
+        loginType
+      } = user;
 
-      let {password} = user;
+      let { password } = user;
 
       const detailValidation = await this.getUser(username);
 
@@ -69,47 +72,47 @@ export class AuthService {
           type,
           avatar,
           disabled,
-          loginType,
+          loginType
         });
 
-        newUser.save().then((res) => {
-          this.logger.info(res);
-        })
+        newUser
+          .save()
+          .then((res) => {
+            this.logger.info(res);
+          })
           .catch((err) => {
             this.logger.error(err);
           });
       } else {
-        throw new ConflictError({
-          statusCode: 409,
-        }, 'Duplicated user details');
+        throw new ConflictError(
+          {
+            statusCode: 409
+          },
+          'Duplicated user details'
+        );
       }
-
     } catch (err) {
       this.logger.error(err);
       throw err;
     }
-
   }
 
   public async login(username: string, password: string): Promise<void> {
     try {
       const user = await this.getUser(username);
       const dbPassword = user[0].password;
-      this.compare(password, dbPassword).then((match) => {
-        if (match === false) {
-          throw new UnauthorizedError({statusCode: 401}, 'Invalid details');
-        }
-      }).catch((err) => {
-        throw err;
-      });
-
+      this.compare(password, dbPassword)
+        .then((match) => {
+          if (match === false) {
+            throw new UnauthorizedError({ statusCode: 401 }, 'Invalid details');
+          }
+        })
+        .catch((err) => {
+          throw err;
+        });
     } catch (err) {
       this.logger.error(err);
       throw err;
     }
-
-
   }
-
-
 }

@@ -1,4 +1,4 @@
-import {AuthService} from './services/auth-service';
+import { AuthService } from './services/auth-service';
 import logger from './logger';
 
 export default class Api {

@@ -9,6 +9,7 @@
         "build": "tsc -b",
         "start": "node dist/app.js",
         "lint": "eslint . --ext .ts",
+        "lint:fix": "eslint . --ext .ts --fix",
         "debug": "node $NODE_DEBUG_OPTION dist/app/app.js"
     },
     "author": "",
@@ -41,6 +42,9 @@
         "@types/restify-errors": "^4.3.4",
         "@typescript-eslint/eslint-plugin": "^4.28.4",
         "@typescript-eslint/parser": "^4.28.4",
-        "eslint": "^7.31.0"
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "prettier": "^2.5.0"
     }
 }

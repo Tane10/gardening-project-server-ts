@@ -1,7 +1,6 @@
-import mongoose, {Schema, Types} from 'mongoose';
+import mongoose, { Schema, Types } from 'mongoose';
 
-import {LoginType} from '../model/user';
-
+import { LoginType } from '../model/user';
 
 export interface UserInterface extends Document {
   _id?: Types.ObjectId;
@@ -18,16 +17,18 @@ export interface UserInterface extends Document {
   updatedAt?: Date;
 }
 
-const UserSchema: Schema = new Schema({
-  fullname: {type: String},
-  username: {type: String},
-  password: {type: String},
-  email: {type: String},
-  type: {type: String},
-  avatar: {type: String},
-  disabled: {type: Boolean},
-  loginType: {type: LoginType},
-}, {timestamps: true});
-
+const UserSchema: Schema = new Schema(
+  {
+    fullname: { type: String },
+    username: { type: String },
+    password: { type: String },
+    email: { type: String },
+    type: { type: String },
+    avatar: { type: String },
+    disabled: { type: Boolean },
+    loginType: { type: LoginType }
+  },
+  { timestamps: true }
+);
 
 export default mongoose.model<UserInterface>('Users', UserSchema);

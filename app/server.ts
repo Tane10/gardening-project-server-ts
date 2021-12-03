@@ -1,12 +1,12 @@
 import restify from 'restify';
-import corsMiddleware, {CorsMiddleware} from 'restify-cors-middleware2';
+import corsMiddleware, { CorsMiddleware } from 'restify-cors-middleware2';
 
-import {Controller} from './controllers/controller';
+import { Controller } from './controllers/controller';
 
 const cors: CorsMiddleware = corsMiddleware({
   origins: ['*'],
   allowHeaders: ['Authorization'],
-  exposeHeaders: ['Authorization'],
+  exposeHeaders: ['Authorization']
 });
 
 export class Server {
@@ -27,6 +27,4 @@ export class Server {
   public getApp(): restify.Server {
     return this.app;
   }
-
 }
-
