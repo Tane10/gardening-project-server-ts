@@ -6,14 +6,13 @@ import router, { Router } from 'restify-router';
 import { injectable } from 'inversify';
 
 import { AuthService } from '../services/auth-service';
-import User from '../model/user';
+import { User } from '../model/user';
 
 import { Controller } from './controller';
 
 @injectable()
 export class AuthController implements Controller {
   public router: Router;
-  // public authService: AuthService;
 
   constructor(private authService: AuthService) {
     this.router = new Router();
@@ -37,7 +36,11 @@ export class AuthController implements Controller {
     });
   }
 
-  public async login(req: Request, res: Response, next: Next): Promise<void> {
+  public login = async (
+    req: Request,
+    res: Response,
+    next: Next
+  ): Promise<void> => {
     try {
       if (req.body.username && req.body.password) {
         this.authService
@@ -53,16 +56,20 @@ export class AuthController implements Controller {
     } catch (err) {
       next(err);
     }
-  }
+  };
 
-  public async signUp(req: Request, res: Response, next: Next): Promise<void> {
+  public signUp = async (
+    req: Request,
+    res: Response,
+    next: Next
+  ): Promise<void> => {
     try {
       const user: User = req.body;
       await this.authService.signUpUser(user);
     } catch (err) {
       next(err);
     }
-  }
+  };
 
   public getRouter(): router.Router {
     return this.router;

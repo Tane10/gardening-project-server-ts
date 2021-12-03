@@ -1,15 +1,9 @@
-// export enum UserType {
-//     User = 'user',
-//     Admin = 'admin',
-//     Demo = 'demo',
-// }
-
 export enum LoginType {
   Standard = 'standard',
   Google = 'google'
 }
 
-export default class User {
+export interface User {
   fullname?: string;
   username: string;
   password: string;

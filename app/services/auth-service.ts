@@ -22,28 +22,38 @@ export class AuthService {
 
   constructor(@inject('Logger') private logger: Logger) {}
 
-  private async hashPassword(password: string): Promise<string> {
+  private hashPassword = (password: string): Promise<string> => {
     return bcrypt.hash(password, this.saltRounds);
-  }
+  };
 
-  private async getUser(username: string): Promise<UserInterface[]> {
+  private getUser = async (username: string): Promise<UserInterface[]> => {
     try {
       return UserSchema.find({ username });
     } catch (err) {
       throw new BadRequestError({ statusCode: 400 }, 'Bad Request');
     }
-  }
+  };
 
-  private async compare(password: string, dbHash: string): Promise<boolean> {
+  private compare = async (
+    password: string,
+    dbHash: string
+  ): Promise<boolean> => {
     return bcrypt.compare(password, dbHash);
-  }
+  };
 
-  // private async encodeToken(username: string, password: string, maxAge?: string): Promise<void> {
-  //   return jwt.sign({username: `${username}`, password: `${password}`},
-  //     process.env.JWT_KEY, {expiresIn: maxAge ? maxAge : '24h'});
-  // }
+  private encodeToken = async (
+    username: string,
+    password: string,
+    maxAge?: string
+  ): Promise<string> => {
+    return jwt.sign(
+      { username: `${username}`, password: `${password}` },
+      process.env.JWT_KEY,
+      { expiresIn: maxAge ? maxAge : '24h' }
+    );
+  };
 
-  public async signUpUser(user: User): Promise<void> {
+  public signUpUser = async (user: User): Promise<void> => {
     try {
       const {
         fullname,
@@ -95,9 +105,9 @@ export class AuthService {
       this.logger.error(err);
       throw err;
     }
-  }
+  };
 
-  public async login(username: string, password: string): Promise<void> {
+  public login = async (username: string, password: string): Promise<void> => {
     try {
       const user = await this.getUser(username);
       const dbPassword = user[0].password;
@@ -114,5 +124,5 @@ export class AuthService {
       this.logger.error(err);
       throw err;
     }
-  }
+  };
 }

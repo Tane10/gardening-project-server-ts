@@ -18,7 +18,7 @@ container.bind<Logger>('Logger').toConstantValue(logger);
 
 const server = new Server([container.get<AuthController>(AuthController)]);
 
-async function start(): Promise<void> {
+const start = async (): Promise<void> => {
   await mongoose
     .connect(process.env.MONGO_DB_CONNECTION_STRING)
     .then(() => {
@@ -40,7 +40,7 @@ async function start(): Promise<void> {
       logger.error(`DB auth failed: ${err}`);
       throw err;
     });
-}
+};
 
 // dirty way to make exports available to the frontend
 export { Common };
